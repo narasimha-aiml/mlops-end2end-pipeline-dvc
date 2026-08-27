@@ -1,0 +1,47 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/data/preprocessing.py
+    deps:
+    - path: data/raw
+      hash: md5
+      md5: c593d1f4b411b1adf571f8633d4bc35e.dir
+      size: 41247596
+      nfiles: 1200
+    outs:
+    - path: data/processed
+      hash: md5
+      md5: 01c6a0270bc8ac79f4056181c17ad92d.dir
+      size: 719534168
+      nfiles: 6
+  train:
+    cmd: python src/models/train.py
+    deps:
+    - path: data/processed
+      hash: md5
+      md5: 01c6a0270bc8ac79f4056181c17ad92d.dir
+      size: 719534168
+      nfiles: 6
+    - path: src/data
+      hash: md5
+      md5: 55ddb907d80e2ee8e83a7d250cf02b28.dir
+      size: 9743
+      nfiles: 4
+    - path: src/models
+      hash: md5
+      md5: 59a8dd5dc16f05bc2d31ed8d204b6b8a.dir
+      size: 9094
+      nfiles: 2
+    params:
+      params.yaml:
+        train.batch_size: 32
+        train.epochs: 6
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: 699023eabfb4ebb869c2919752d52ba2
+      size: 119
+    - path: models/cats_dogs_model.h5
+      hash: md5
+      md5: de48f730984a2b96d0200c676896f2e6
+      size: 133637040
