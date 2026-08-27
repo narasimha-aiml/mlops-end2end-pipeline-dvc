@@ -1,0 +1,3 @@
+train:
+  epochs: 6
+  batch_size: 32
