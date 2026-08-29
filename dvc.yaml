@@ -1,0 +1,31 @@
+stages:
+  prepare:
+    cmd: python src/data/preprocessing.py
+    deps:
+      - data/raw
+    outs:
+      - data/processed:
+          cache: true
+
+  train:
+    cmd: python src/models/train.py
+    deps:
+      - data/processed
+      - src/models
+      - src/data
+    params:
+      - train.epochs
+      - train.batch_size
+    metrics:
+      - metrics.json:
+          cache: false
+    outs:
+      - models/cats_dogs_model.h5:
+          cache: true
+
+plots:
+  - metrics.json:
+      x: epoch
+      y:
+        - loss
+        - val_loss
