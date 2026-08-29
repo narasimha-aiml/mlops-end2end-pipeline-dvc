@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SERVICE_URL="http://localhost:8000/health"
-MAX_RETRIES=60
+MAX_RETRIES=90
 RETRY_INTERVAL=1
 
 echo "Waiting for service to be healthy..."

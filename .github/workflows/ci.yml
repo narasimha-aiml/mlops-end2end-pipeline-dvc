@@ -89,7 +89,23 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Run smoke tests
+    - name: Build Docker image
+      run: docker build -t cats-dogs-classifier:latest .
+
+    - name: Deploy with Docker Compose
       run: |
-        bash scripts/smoke_tests.sh
-      continue-on-error: true
+        docker-compose -f deployment/docker-compose/docker-compose.yml up -d --build
+
+    - name: Wait for service to be ready
+      run: bash scripts/wait_for_service.sh
+
+    - name: Run smoke tests
+      run: bash scripts/smoke_tests.sh
+
+    - name: Show container logs on failure
+      if: failure()
+      run: docker-compose -f deployment/docker-compose/docker-compose.yml logs
+
+    - name: Tear down
+      if: always()
+      run: docker-compose -f deployment/docker-compose/docker-compose.yml down || true

@@ -3,7 +3,7 @@
 set -e
 
 API_URL="http://localhost:8000"
-MAX_RETRIES=30
+MAX_RETRIES=60
 RETRY_INTERVAL=2
 
 echo "Running smoke tests..."
