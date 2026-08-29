@@ -118,5 +118,3 @@ docker-compose -f deployment/docker-compose/docker-compose.yml up
 - Latency tracking
 - Model performance metrics
 - Health endpoint monitoring
-
-
