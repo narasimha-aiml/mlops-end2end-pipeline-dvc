@@ -57,9 +57,9 @@ jobs:
 
     - name: Deploy with Docker Compose
       run: |
-        docker-compose -f deployment/docker-compose/docker-compose.yml pull || true
-        docker-compose -f deployment/docker-compose/docker-compose.yml down || true
-        docker-compose -f deployment/docker-compose/docker-compose.yml up -d --build
+        docker compose -f deployment/docker-compose/docker-compose.yml pull || true
+        docker compose -f deployment/docker-compose/docker-compose.yml down || true
+        docker compose -f deployment/docker-compose/docker-compose.yml up -d --build
 
     - name: Wait for service to be ready
       run: bash scripts/wait_for_service.sh
@@ -69,8 +69,8 @@ jobs:
 
     - name: Show container logs on failure
       if: failure()
-      run: docker-compose -f deployment/docker-compose/docker-compose.yml logs
+      run: docker compose -f deployment/docker-compose/docker-compose.yml logs
 
     - name: Tear down
       if: always()
-      run: docker-compose -f deployment/docker-compose/docker-compose.yml down || true
+      run: docker compose -f deployment/docker-compose/docker-compose.yml down || true
